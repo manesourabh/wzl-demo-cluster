@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: dbleaf!2020
 
   ioppcc:
-    image: ./iop-base-for-leaf
+    image: rails-demo-iconpro
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./iop-base-for-leaf:/appcode
@@ -32,7 +32,7 @@ services:
       - 8080:8080
 
   leaf:
-    image: ./leaf-application
+    image: django-demo-iconpro
     volumes:
       - ./leaf-application:/code
     ports:
@@ -41,7 +41,7 @@ services:
       - ioppcc
 
   humapp:
-    image: ./humapp
+    image: humapp-demo-iconpro
     command: bash -c "rm -f tmp/pids/server.pid && thin start --ssl --ssl-key-file localhost.key --ssl-cert-file localhost.crt -p 3001 -a 0.0.0.0"
     volumes:
       - ./humapp:/appcode
