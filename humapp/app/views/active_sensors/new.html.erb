@@ -1,0 +1,24 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card mt-4">
+      <header class="card-header">
+        <h4 class="card-title mt-2"> New Sensor
+          <a href="/active_sensors/" class="btn btn-primary float-right" role="button" aria-pressed="true">Back</a>
+        </h4>
+      </header>
+      <div class="card-body">
+        <%= form_with( url: "/active_sensors", html: { method: :post }) do |f| %>
+          <div class="form-group row">
+            <label for="contract_id" class="col-sm-4 col-form-label">Sensor Name</label>
+            <div class="col-sm-8">
+              <%= f.text_field :sensor_name, autofocus: true, autocomplete: "Sensor Name", class: "form-control" %>
+            </div>
+          </div>
+          <div class="actions form-group">
+            <%= f.submit "Create", class: "btn btn-success btn-block" %>
+          </div>
+        <% end %>
+      </div><!-- card-body.// -->
+    </div> <!-- card.// -->
+  </div> <!-- col.//-->
+</div> <!-- row.//-->

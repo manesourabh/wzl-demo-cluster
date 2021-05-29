@@ -1,0 +1,51 @@
+<div class="row justify-content-md-center mt-2">
+  <div class="col col-md-11">
+    <div class="card">
+      <div class="card card-body ">
+        <h4 class="text-center mb-0">Leaf Failure Dataset</h4>
+      </div>
+      <div class="card card-header border-bottom-0 ">
+        <%= form_with(url: "/leaf/import", method: "post", multipart: true, :html => {class: "", role: "form", id: "add_mem_form"} ) do   %>
+          <div class="custom-file d-flex justify-content-between">
+            <div class="col-8">
+              <%= file_field_tag :file, class: "custom-file-input", id: "customFile",required: true %>
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+              <%= submit_tag "Import", class: "btn btn-success col-3"%>
+          </div>
+        <% end %>
+      </div>
+      <div class="card card-body">
+        <table id="gear_shafts_data_table" class="table display nowrap  ">
+          <thead>
+            <% @col.each do |c|%>
+            <th><%= c %></th>
+            <% end %>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  // following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+  // This will use datatables as a base for application
+  $(document).ready( function () {
+    $('#gear_shafts_data_table').DataTable( {
+        data: <%= raw @data.to_json %>,
+        columns: [
+          <% @col.each do |c|%>
+          { data: "<%= c %>"},
+          <% end %>
+        ],
+        "scrollX": true
+    } );
+  } );
+
+</script>

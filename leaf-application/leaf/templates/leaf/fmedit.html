@@ -1,0 +1,182 @@
+{% extends "leaf/base.html" %}
+{% block content %}
+{% load static %}
+
+
+	<div class="sidebar navbar-dark indigo">
+		<a href="{% url 'nfmadmin-leaf' %}">Neue Fehlermeldung</a>
+		<a href="{% url 'daten-bank' %}">Datenbank</a>	  
+	</div>
+
+
+	<div class="content">
+		<h2>Fehlermeldung editieren</h2> <br><br>
+		<form lang="de" action="{% url 'fmeditpreprocessing-leaf' initial_values.fm_id %}" method="post">
+		  <div class="form-row">
+			<div class="col-md-6 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+					  <span class="input-group-text" id="inputGroupPrepend1">Mitarbeiter</span>
+					</div>
+					<input type="text" class="form-control" default="{{initial_values.user_id}}" value="{{initial_values.user_id}}" id="validationDefaultUsername" aria-describedby="inputGroupPrepend1" readonly>
+				</div>
+		    </div>
+		    <div class="col-md-4 mb-3">
+				<div class="input-group">
+			        <div class="input-group-prepend">
+			          <span class="input-group-text" id="inputGroupPrepend2">Datum</span>
+			        </div>
+			        <input type="text" class="form-control" value="{{ initial_values.error_datetime }}" name="error_datetime" id="error_datetime" aria-describedby="inputGroupPrepend2">
+		      	</div>
+		    </div>
+		    <div class="col-md-2 mb-3">
+				<div class="input-group">
+				    <div class="input-group-prepend">
+		          		<span class="input-group-text" id="inputGroupPrepend3">Status</span>
+		        	</div>
+				    <select id="inputStatus" default="{{initial_values.status}}" value="{{ initial_values.status }}" name="status" class="form-control">
+				        {% if initial_values.status == "Offen" %}
+				        <option selected>Offen</option>
+				        <option value="Geschlossen">Geschlossen</option>
+				        {% else %}
+				        <option selected>Geschlossen</option>
+				        <option value="Offen">Offen</option>
+				        {% endif %}
+			      	</select>
+		      	</div>
+		    </div>
+		  </div>
+
+		  <div class="form-row">
+				<div class="col-md-6 mb-3">
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+								  <span class="input-group-text" id="inputGroupPrepend1">Tätigkeit</span>
+								</div>
+								<select id="first-choice" name="activity" class="form-control" oninvalid="setCustomValidity('Dieses Feld wird benötigt.')" required>
+							        <option selected value="{{ initial_values.activity }}">{{ initial_values.activity }}</option>
+							        <option value="Arbeitsvorbereitung">Arbeitsvorbereitung</option>
+							        <option value="Ausschneiden">Ausschneiden</option>
+							        <option value="Drehen">Drehen</option>
+							        <option value="FaltenNaehen">Falten Naehen</option>
+							        <option value="Heften">Heften</option>
+							        <option value="KerneHeften">Kerne Heften</option>
+							        <option value="NeuerFehler">Neuer Fehler</option>
+							        <option value="Pressen">Pressen</option>
+							        <option value="RollenSchneiden">Rollen Schneiden</option>
+							        <option value="SchlauchNaehen">Schlauch Naehen</option>
+							        <option value="SchlauchSchneiden">Schlauch Schneiden</option>
+							        <option value="Uebernaehen">Uebernaehen</option>
+						      	</select>
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+								  <span class="input-group-text" id="inputGroupPrepend1">Fehler</span>
+								</div>
+								<select id="second-choice" value="{{ initial_values.failure }}" name="failure" class="form-control">
+							        <option>{{ initial_values.failure }}</option>
+						      	</select>
+						      	<div class="input-group-append">
+									<button class="btn-primary btn-sm" type="button" data-toggle="modal" data-target="#addnewfehler">Hinzufügen</button>
+								</div>
+							</div>
+					    </div>
+						<div class="col-md-12 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+								  <span class="input-group-text" id="inputGroupPrepend1">Grund</span>
+								</div>
+								<select id="third-choice" value="{{ initial_values.cause }}" name="cause" class="form-control">
+							        <option>{{ initial_values.cause }}</option>
+						      	</select>
+						      	<div class="input-group-append">
+									<button class="btn-primary btn-sm" type="button" data-toggle="modal" data-target="#addnewgrund">Hinzufügen</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			    </div>
+			    <div class="col-md-6 mb-3">
+					<div class="input-group">
+					    <div class="input-group-prepend">
+			          		<span class="input-group-text" deaulft="{{ initial_values.description }}" value="{{ initial_values.description }}" name="description" id="inputGroupPrepend3">Fehlerbeschreibung</span>
+			        	</div>
+					    <textarea rows="6" class="form-control" name="description" id="validationDefaultDesc" aria-describedby="inputGroupPrepend4">{{ initial_values.description }}</textarea>
+			      	</div>
+			    </div>
+		  </div>
+		  <div class="form-row">
+		  	<div class="col-md-6 mb-3"></div>
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="custom-control custom-radio col-12" style="border:1px solid #CDCCCE; padding: 10px 0px 10px 35px; border-radius: 4%;">
+						<input type="checkbox" id="customRadio1" {% if initial_values.recoverable %} checked{% endif %} name="customRadio" class="custom-control-input">
+						<label class="custom-control-label" for="customRadio1">Fehler lösbar</label>
+					</div>
+			  	</div>
+		    </div> 
+		  </div><br>
+		  <div class="form-row">
+		  	<div class="col-3">
+		  		<a href="{% url 'admin-leaf' %}" style="color: inherit;">
+		  			<button type="button" class="btn float-left" style="background-color: orange;">Zurück</button>
+		  		</a>
+		  	</div>
+		  	<div class="col-3 offset-3 my-auto">
+			    <div class="input-group">
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input"value="{{ nfbild }}" name="nfbild" id="customFile">
+				    <label class="custom-file-label" for="customFile">Bild hochladen</label>
+				  </div>
+	            </div>
+	        </div>
+	        <div class="col-3">
+		    	<button class="btn float-right" style="background-color: orange;" type="submit" onclick="validation()">Fehler editieren</button>
+		    </div>
+		</form>
+	</div>
+
+	<div class="modal fade" id="addnewfehler" tabindex="-1" role="dialog" aria-labelledby="addnewfehler" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalCenterTitle">Fehler Hinzufügen</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <input class="form-control" id="addfehler" type="text" placeholder="Einen Vorschlag hinzufügen">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" onclick="savenewfehler()" data-dismiss="modal">Speichern</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="addnewgrund" tabindex="-1" role="dialog" aria-labelledby="addnewgrund" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalCenterTitle">Grund Hinzufügen</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<input class="form-control" id="addgrund" type="text" placeholder="Einen Vorschlag hinzufügen">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" onclick="savenewgrund()" data-dismiss="modal">Speichern</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+{% endblock content %}
+

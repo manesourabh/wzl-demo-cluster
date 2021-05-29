@@ -1,0 +1,82 @@
+<div class="row mt-1">
+  <div class="col-4 pr-0">
+    <div class="card">
+      <div class="card-body ">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">IOP-PPC</a>
+          <a class="list-group-item list-group-item-action" id="list-admin-list" data-toggle="list" href="#list-admin" role="tab" aria-controls="admin">Admin</a>
+          <a class="list-group-item list-group-item-action" id="list-group-list" data-toggle="list" href="#list-group" role="tab" aria-controls="group">Groups & roles</a>
+          <a class="list-group-item list-group-item-action" id="list-datasets-list" data-toggle="list" href="#list-datasets" role="tab" aria-controls="datasets">Datasets</a>
+          <a class="list-group-item list-group-item-action" id="list-api-list" data-toggle="list" href="#list-api" role="tab" aria-controls="api">API's'</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="tab-content" id="nav-tabContent">
+          <!-- Home page of documentation -->
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+            <strong>IOP-PPC: Internet of production - production control center</strong>
+            <p>This web application is built with intent to facilitates the user management
+              for cluser of applications which come under IOP. It also save the user data
+              and deligates its acess through API's. It implements OAuth2.0(authorization
+              server) for deligating access to the user data. </p>
+            <p>Only registered applications can acess the data through the API's. To
+              register an applications, you will need a secret and id, which will be
+              provided by site admin.</p>
+          </div>
+          <!-- Admin page of documentation -->
+          <div class="tab-pane fade" id="list-admin" role="tabpanel" aria-labelledby="list-admin-list">
+            Admin:
+            <ul>
+              <li>Admin can regieter new applications. Admin needs a 'callback url',
+                scope(optional), name(can be selected by admin) from new application
+                for registering new application</li>
+              <li>Admin can even modify the registrated application details if necessory</li>
+            </ul>
+          </div>
+          <!-- Groups and roles page of documentation -->
+          <div class="tab-pane fade" id="list-group" role="tabpanel" aria-labelledby="list-group-list">
+            Groups:
+            <ul>
+              <li>Groups facilitate the deligation of access to the user data</li>
+              <li>Each group:
+                <ul>
+                  <li>has one owner</li>
+                  <li>can have many users</li>
+                  <li>can have many accesible datasets</li>
+                  <li>can have many roles</li>
+                </ul></li>
+              <li>Groups can be created by any user</li>
+              <li>Only gruop owner or admin can add users to the group</li>
+              <li>Only group owner or admin can add new user roles</li>
+              <li>Only group owner or admin can assign user roles</li>
+              <li>Only admins can add the accessible datasets</li>
+            </ul>
+          </div>
+          <!-- Datasets page of documentation -->
+          <div class="tab-pane fade" id="list-datasets" role="tabpanel" aria-labelledby="list-datasets-list">
+            Datasets:
+            <ul>
+              <li>Datasets have to defined and deployed by a deveoper(needs chages
+                on back end)</li>
+              <li>CSV data could also be imported useing above page</li>
+              <li>Each dataset has one basic view (check navigation bar)</li>
+              <li>Access to a database is restricted on two levels one by group,
+                and second, by user role. A user will be able to access a dataset
+                if and only if a user is in a perticular gruop with access to database
+                with a perticular role</li>
+            </ul>
+          </div>
+          <!-- Api page of documentation -->
+          <div class="tab-pane fade" id="list-datasets" role="tabpanel" aria-labelledby="list-datasets-list">
+            <strong>API documentation will be updated here soon!</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

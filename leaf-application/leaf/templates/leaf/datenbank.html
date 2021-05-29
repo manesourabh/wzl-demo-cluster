@@ -1,0 +1,107 @@
+{% extends "leaf/base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="displaydata">
+    <div class="row">
+        <div class="float-left col-md-2">
+            <h2 style="font-family: Tahoma, serif;">Fehlermeldungen</h2>
+        </div>
+        <div class="col-md-1 offset-md-9">
+            <a href="{% url 'admin-leaf' %}" style="color: inherit;">
+                <button type="button" class="btn float-right" style="background-color: orange;">Zurück</button>
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="test-container">
+      <div
+        style="height: 52%; font-family: Tahoma, serif;"
+        id="myGrid"
+        class="ag-theme-alpine">
+      </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/@ag-grid-enterprise/all-modules@23.0.2/dist/ag-grid-enterprise.min.js"></script>
+<!-- <script type="module" src="{% static 'leaf/js/datenbank.js' %}"></script> -->
+<script type="text/javascript">
+  var rowData = {{data | safe}}
+  var gridOptions = {
+  columnDefs: [
+    { field: 'id',
+      minWidth: 91, 
+      headerName: 'Editieren',
+      editable: true,
+      cellRenderer: function(params){
+        return "<a href='{% url 'fmedit' %}"+ params.value+"'>"+params.value+"</a>";
+      }
+    },
+    { field: 'activity', minWidth: 180, headerName: 'Tätigkeit' },
+    { field: 'failure', minWidth: 180, headerName: 'Fehler' },
+    { field: 'cause', minWidth: 180, headerName: 'Grund' },
+    {
+      field: 'error_datetime',
+      filter: 'agDateColumnFilter',
+      headerName: 'Datum & Uhrzeit',
+      filterParams: {
+        comparator: function(filterLocalDateAtMidnight, cellValue) {
+          var dateAsString = cellValue;
+          if (dateAsString == null) return -1;
+          var dateParts = dateAsString.split('/');
+          var cellDate = new Date(
+            Number(dateParts[2]),
+            Number(dateParts[1]) - 1,
+            Number(dateParts[0])
+          );
+
+          if (filterLocalDateAtMidnight.getTime() == cellDate.getTime()) {
+            return 0;
+          }
+
+          if (cellDate < filterLocalDateAtMidnight) {
+            return -1;
+          }
+
+          if (cellDate > filterLocalDateAtMidnight) {
+            return 1;
+          }
+        },
+        browserDatePicker: true,
+      },
+    },
+    { field: 'status' },
+    { field: 'user_id', headerName: 'Mitarbeiter' },
+  ],
+  defaultColDef: {
+    enableRowGroup: true,
+    enablePivot: true,
+    enableValue: true,
+    sortable: true,
+    resizable: true,
+    filter: true,
+    flex: 1,
+    minWidth: 100,
+  },
+  rowData: rowData,
+  sideBar: 'filters',
+  pagination: true,
+  paginationPageSize: 50,
+  paginationNumberFormatter: function(params) {
+    return '[' + params.value.toLocaleString() + ']';
+  },
+};
+
+function onPageSizeChanged(newPageSize) {
+  var value = document.getElementById('page-size').value;
+  gridOptions.api.paginationSetPageSize(Number(value));
+}
+
+// setup the grid after the page has finished loading
+document.addEventListener('DOMContentLoaded', function() {
+  var gridDiv = document.querySelector('#myGrid');
+  new agGrid.Grid(gridDiv, gridOptions);
+});
+</script>
+{% endblock content %}
+

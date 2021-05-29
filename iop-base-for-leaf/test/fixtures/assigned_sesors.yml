@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sensor_name: MyString
+  start_time: 2020-06-30 21:05:25
+  end_time: 2020-06-30 21:05:25
+
+two:
+  sensor_name: MyString
+  start_time: 2020-06-30 21:05:25
+  end_time: 2020-06-30 21:05:25

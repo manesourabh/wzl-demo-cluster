@@ -1,0 +1,25 @@
+{% extends "leaf/base.html" %}
+{% block content %}
+{% load static %}
+
+	<div class="sidebar navbar-dark indigo">
+		<a href="{% url 'nfmadmin-leaf' %}">Neue Fehlermeldung</a>
+		<a href="{% url 'daten-bank' %}">Datenbank</a>	  
+	</div>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="content">
+            <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+              <a class="close" data-dismiss="alert" href="#">&times;</a>
+              {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+
+	<div class="content">
+	  <h2>{{ user.first_name }}</h2>
+	</div>
+
+{% endblock content %}

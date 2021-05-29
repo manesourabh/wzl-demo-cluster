@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  activity: MyString
+  failure: MyString
+  cause: MyString
+  admin_approval: false
+
+two:
+  activity: MyString
+  failure: MyString
+  cause: MyString
+  admin_approval: false

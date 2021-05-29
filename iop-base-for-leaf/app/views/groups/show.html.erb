@@ -1,0 +1,240 @@
+<div class="row justify-content-md-center mt-2">
+  <div class="col col-md-11">
+    <div class="card">
+      <div class="card card-body ">
+        <div class="d-inline-flex justify-content-between">
+          <div class="">
+            <!-- # dummy div -->
+          </div>
+          <div class="">
+            <h4>Group Name: <span class="ml-2 text-muted"><%= @group.name %></span></h4>
+          </div>
+          <div class="">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#groupRoleModal">Group Roles</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataFormModal">Add Dataset</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addMemberFormModal">Add Member</button>
+          </div>
+        </div>
+      </div>
+      <div class="card card-header border-bottom-0 ">
+        <h5 class="text-center mb-0">Members</h5>
+      </div>
+      <div class="card card-body">
+        <table class="table  table-hover ">
+          <!-- <col width="10%">
+          <col>
+          <col width="10%"> -->
+          <thead>
+            <tr>
+              <th scope="row">User id</th>
+              <th class="text-left">Name</th>
+              <th class="text-left">Email</th>
+              <th class="text-left">Role</th>
+              <th class="text-left">remove</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @members.each do |m|%>
+              <tr>
+                <th scope="row" width=15%><%= m.id %></th>
+                <td class="text-left" width=25%><%= m.firstname + " " + m.lastname %> </td>
+                <td class="text-left" width=40%><%= m.email %> </td>
+                <td class="text-left" width=00%><%= link_to("Roles", "", class: "btn btn-info btn-sm role_button", data: {id: m.id, group_id: @group_id, toggle: "modal", target: "#MemberRoleModal"} ) %> </td>
+                <td class="text-left py-auto" width=10% ><%= link_to("Remove", delete_group_member_path(@group, email: m.email), method: :delete, data: {confirm: "Are you sure?"},  class: "btn btn-danger btn-sm")%></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h5 class="text-center mb-0">Accessible datasets</h5>
+        </div>
+        <div class="card-body">
+          <table class="table  table-hover " >
+            <thead>
+              <tr>
+                <th scope="row" width=15%>Entry no.</th>
+                <th class="text-left" width=50%>Dataset name</th>
+                <th class="text-left" width=20%>Role</th>
+                <th class="text-left" width=15%>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @table_names.each do |t|%>
+                <tr>
+                  <th scope="row"><%= t.id %></th>
+                  <td class="text-left"><%= t.dataset_name %> </td>
+                  <td class="text-left"><%= t.role %> </td>
+                  <td class="text-left py-auto "><%= link_to("Remove", delete_group_dataset_path(id: t.id, group_id: @group_id), method: :delete, data: {confirm: "Are you sure?"},  class: "btn btn-danger btn-sm")%></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for adding members -->
+<div class="modal fade" id="addMemberFormModal" tabindex="-1" role="dialog" aria-labelledby="addMemberFormModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMemberFormModalTitle">Add Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(url: "/groups/addmember", method: "post", :html => {class: "form-inline", role: "form", id: "add_mem_form"} ) do %>
+          <%= label_tag(:email, "Email: ") %>
+          <%= email_field_tag(:email, "" , class:"form-control ml-2") %>
+          <%= hidden_field_tag(:group_id, @group.id )%>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <input type="submit" name="commit" value="Add member" class="btn btn-primary" data-disable-with="Please wait..." form="add_mem_form">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal for adding datasets -->
+<div class="modal fade" id="addDataFormModal" tabindex="-1" role="dialog" aria-labelledby="addDataFormModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDataFormModalTitle">Add Dataset</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(url: "/groups/adddataset", method: "post", :html => {class: "", role: "form", id: "add_data_form"} ) do %>
+          <div class="form-group row">
+            <%= label_tag(:dataset_name, "Name of Dataset: ", class: "col-4 col-form-label") %>
+            <div class="col-7">
+              <%= select_tag("dataset_name", options_for_select([ "GearShaftDataset", "Xkm", "LeafFailure" ]), class:"form-control ml-2")%>
+            </div>
+          </div>
+          <div class="form-group row">
+            <%= label_tag(:role, "Role: ", class: "col-4 col-form-label") %>
+            <div class="col-7">
+              <%= select_tag("role", options_for_select(@group_roles.pluck(:name)), class:"form-control ml-2")%>
+            </div>
+          </div>
+          <%= hidden_field_tag(:group_id, @group.id )%>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <input type="submit" name="commit" value="Add dataset" class="btn btn-primary" data-disable-with="Please wait..." form="add_data_form">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Group roles modal -->
+<div class="modal fade" id="groupRoleModal" tabindex="-1" role="dialog" aria-labelledby="groupRoleModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="groupRoleModalTitle">Manage Group Roles</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table  table-sm border">
+          <thead>
+            <tr>
+              <th class="text-center" colspan="3">Existing roles</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @group_roles.each do |t|%>
+              <tr>
+                <td class="text-center"><%=t.id%></td>
+                <td scope="row" class="pl-1"><%= t.name.capitalize %></td>
+                <td class="text-right pr-2"><%= link_to("Remove", delete_group_role_path(id: t.id, group_id: @group_id), method: :delete, data: {confirm: "Are you sure?"},  class: "btn btn-danger btn-sm py-0")%></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <strong >Add new role:</strong>
+        <%= form_with(url: "/groups/addgrouprole", method: "post", :html => {class: "form-inline mt-1", role: "form", id: "add_role_form"} ) do %>
+          <%= label_tag(:role_name, "Role Name: ") %>
+          <%= text_field_tag(:role_name, "", class:"form-control ml-2")%>
+          <%= hidden_field_tag(:group_id, @group.id )%>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <input type="submit" name="commit" value="Add role" class="btn btn-primary" data-disable-with="Please wait..." form="add_role_form">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for displaying/adding user roles -->
+<div class="modal fade" id="MemberRoleModal" tabindex="-1" role="dialog" aria-labelledby="MemberRoleModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="MemberRoleModalTitle">User roles</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table  table-sm border" id="exixtingRolesTable">
+          <thead>
+            <tr>
+              <th class="text-center" colspan="3">Existing roles</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <strong >Assign new role:</strong>
+        <%= form_with(url: "/groups/addmemberrole", method: "post", :html => {class: "form-inline", role: "form", id: "add_mem_role_form"} ) do %>
+          <%= label_tag(:role, "Role: ") %>
+          <%= select_tag("Role", options_for_select(@group_roles.pluck(:name)), class:"form-control ml-2")%>
+          <%= hidden_field_tag(:group_id, @group.id, id: "hiddenGroupID" )%>
+          <%= hidden_field_tag(:user_id, "", id: "hiddenUserID" )%>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <input type="submit" name="commit" value="Assign role" class="btn btn-primary" data-disable-with="Please wait..." form="add_mem_role_form">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $( ".role_button" ).click(function() {
+    var uid = $(this).attr("data-id")
+    var gid = $(this).attr("data-group-id")
+    $.getJSON("/groups/memberrole?user_id="+uid+"&group_id="+gid, function(data){
+      var table_data = ""
+      $.each(data.roles, function(index, value){
+        table_data = table_data
+                      + '<tr><td class="text-center">'+ (index + 1 )+'</td>'
+                      + '<td class="text-center">'+value+'</td>'
+                      + '<td class="text-center"><a data-confirm="Are you sure?" class="btn btn-danger btn-sm py-0" rel="nofollow" data-method="delete" href="/groups/deletememberrole/'+uid+'?user_id='+uid+'&group_id='+gid+'&role='+value+'">Remove</a></td></tr>';
+      });
+      $("#hiddenGroupID").val(gid)
+      $("#hiddenUserID").val(uid)
+      $("#exixtingRolesTable > tbody").html(table_data)
+      jQuery('#MemberRoleModal').modal('show');
+      // $("#MemberRoleModalTitle").val('Roles for '+data.user_name)
+    })
+  });
+</script>

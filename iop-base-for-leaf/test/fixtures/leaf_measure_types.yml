@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  success_percent: 1
+  admin_approval: false
+
+two:
+  name: MyString
+  success_percent: 1
+  admin_approval: false

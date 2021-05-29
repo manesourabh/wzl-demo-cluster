@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'leaf/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/css/bootstrap-datepicker.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/css/admin.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'leaf/css/datenbank.css' %}">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Bootstrap core CSS -->
+	<link href="/static/leaf/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="/static/leaf/css/mdb.min.css" rel="stylesheet">
+	<!-- Your custom styles (optional) -->
+	<link href="/static/leaf/css/style.css" rel="stylesheet">
+</head>
+<body>
+	<nav class="mb-1 navbar navbar-expand-lg navbar-dark indigo fixed-top">
+	  <a class="navbar-brand" href="#">
+	  	<img src="{% static 'leaf/images/icons/Leaflogo.jpg' %}" height="40" width="75" alt="leaflogo">
+	  </a>
+	  <ul class="navbar-nav">
+	    <li class="brand-title">Fehlermanagementtool</li>
+      </ul>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+	    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+       	<ul class="navbar-nav ml-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'admin-leaf' %}">
+	          <i class="fas fa-home fa-lg"></i></a>
+	      </li>
+   		{% if user.is_authenticated %}
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'profile-page' %}">
+	          <i class="fas fa-user"></i>{{ user.first_name }}</a>
+	      </li>
+          <li class="nav-item">
+          	<a class="nav-link" href="{% url 'processinglogout' %}">Abmelden</a>
+	      </li>
+          {% else %}
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'wzlapplocal_login' %}">Anmelden</a>
+	      </li>
+          {% endif %}
+	    </ul>
+	  </div>
+	</nav>
+	<br>
+	<br>
+	{% block content %}	{% endblock %}
+	<!--===============================================================================================-->
+	<script src="{% static 'leaf/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'leaf/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'leaf/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'leaf/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'leaf/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'leaf/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'leaf/vendor/daterangepicker/daterangepicker.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/babel-polyfill/dist/polyfill.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuetify@2.2.21/dist/vuetify.min.js"></script>
+
+<!--===============================================================================================-->
+	<script src="{% static 'leaf/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/js/bootstrap-datepicker.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="{% static 'leaf/js/nfm.js' %}"></script>
+	<script src="{% static 'leaf/js/main.js' %}"></script>
+</body>
+</html>

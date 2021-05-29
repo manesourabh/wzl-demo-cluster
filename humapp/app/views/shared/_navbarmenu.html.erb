@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <!-- <a class="navbar-brand" href="#">IOP-PCC</a> -->
+    <%= link_to "HumApp", root_path , class: "navbar-brand" %>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <% if user_signed_in? %>
+      <%= link_to 'Contracts', contracts_path, class: "nav-link"%>
+      <%= link_to 'Active Sensors', active_sensors_path , class: "nav-link"%>
+      <%= link_to 'Sensor Values', sensor_values_path , class: "nav-link"%>
+      <% end %>
+    </ul>
+    <% if user_signed_in? then %>
+    <ul class="navbar-nav mr-1 mt-2 mt-lg-0">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= "Hello " + current_user.firstname %>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <%= link_to "Sign out", "/users/sign_out", data: {method: "delete"}, class: "dropdown-item" %>
+        </div>
+      </li>
+    </ul>
+    <% else %>
+    <%= link_to "Sign in", user_doorkeeper_omniauth_authorize_path , class: "btn btn-outline-success my-2 my-sm-0 mx-1" %>
+    <% end %>
+  </div>
+</nav>

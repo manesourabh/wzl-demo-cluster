@@ -1,0 +1,657 @@
+Started GET "/" for 172.19.0.1 at 2020-11-14 18:52:02 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (5.2.4.3) lib/active_record/migration.rb:579:in `check_pending!'
+activerecord (5.2.4.3) lib/active_record/migration.rb:556:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.4.3) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:22:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.3) lib/rails/engine.rb:524:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ bin/rails:9
+  [1m[35m (10.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ bin/rails:9
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to DeviseCreateUsers (20200626153200)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "firstname" varchar, "lastname" varchar, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20200626153200_devise_create_users.rb:5
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  ↳ db/migrate/20200626153200_devise_create_users.rb:42
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  ↳ db/migrate/20200626153200_devise_create_users.rb:43
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200626153200"]]
+  ↳ bin/rails:9
+  [1m[35m (6.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to AddOmniauthToUsers (20200626154103)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "users" ADD "provider" varchar[0m
+  ↳ db/migrate/20200626154103_add_omniauth_to_users.rb:3
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "uid" varchar[0m
+  ↳ db/migrate/20200626154103_add_omniauth_to_users.rb:4
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200626154103"]]
+  ↳ bin/rails:9
+  [1m[35m (4.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to AddDoorkeeperTokensToUsers (20200626154233)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "users" ADD "doorkeeper_access_token" varchar[0m
+  ↳ db/migrate/20200626154233_add_doorkeeper_tokens_to_users.rb:3
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" ADD "doorkeeper_refresh_token" varchar[0m
+  ↳ db/migrate/20200626154233_add_doorkeeper_tokens_to_users.rb:4
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200626154233"]]
+  ↳ bin/rails:9
+  [1m[35m (4.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-11-14 18:52:39.901228"], ["updated_at", "2020-11-14 18:52:39.901228"]]
+  ↳ bin/rails:9
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Started GET "/" for 172.19.0.1 at 2020-11-14 18:52:51 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/gems/activerecord-5.2.4.3/lib/active_record/log_subscriber.rb:98
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (412.2ms)
+  Rendered shared/_navbarmenu.html.erb (2.0ms)
+  Rendered shared/_flashmsg.html.erb (1.2ms)
+Completed 200 OK in 495ms (Views: 482.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.19.0.1 at 2020-11-14 19:16:36 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (179.8ms)
+  Rendered shared/_navbarmenu.html.erb (1.3ms)
+  Rendered shared/_flashmsg.html.erb (0.5ms)
+Completed 200 OK in 234ms (Views: 225.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.19.0.1 at 2020-11-14 19:16:47 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.9ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 27ms (Views: 25.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.19.0.1 at 2020-11-14 19:16:47 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.5ms)
+  Rendered shared/_navbarmenu.html.erb (0.9ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 54ms (Views: 52.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 172.19.0.1 at 2020-11-14 19:16:48 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/assets/logo-691229d942f186d3157b195c94a851c491506a12724b24d4b65f429574addd97.png"):
+  
+actionpack (5.2.4.3) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:22:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `block in call'
+activesupport (5.2.4.3) lib/active_support/logger_silence.rb:21:in `silence'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.3) lib/rails/engine.rb:524:in `call'
+thin (1.7.2) lib/thin/connection.rb:86:in `block in pre_process'
+thin (1.7.2) lib/thin/connection.rb:84:in `catch'
+thin (1.7.2) lib/thin/connection.rb:84:in `pre_process'
+thin (1.7.2) lib/thin/connection.rb:53:in `process'
+thin (1.7.2) lib/thin/connection.rb:39:in `receive_data'
+eventmachine (1.2.7) lib/eventmachine.rb:195:in `run_machine'
+eventmachine (1.2.7) lib/eventmachine.rb:195:in `run'
+thin (1.7.2) lib/thin/backends/base.rb:73:in `start'
+thin (1.7.2) lib/thin/server.rb:162:in `start'
+thin (1.7.2) lib/thin/controllers/controller.rb:87:in `start'
+thin (1.7.2) lib/thin/runner.rb:203:in `run_command'
+thin (1.7.2) lib/thin/runner.rb:159:in `run!'
+thin (1.7.2) bin/thin:6:in `<top (required)>'
+/usr/local/bundle/bin/thin:23:in `load'
+/usr/local/bundle/bin/thin:23:in `<main>'
+Started GET "/users/auth/doorkeeper" for 172.19.0.1 at 2020-11-14 19:16:49 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/" for 172.19.0.1 at 2020-11-14 19:16:54 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.8ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 34ms (Views: 32.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.19.0.1 at 2020-11-14 19:18:52 +0000
+Cannot render console from 172.19.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.3ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 27ms (Views: 25.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.21.0.1 at 2020-11-14 23:25:24 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/gems/activerecord-5.2.4.3/lib/active_record/log_subscriber.rb:98
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (289.0ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.5ms)
+Completed 200 OK in 372ms (Views: 363.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.21.0.1 at 2020-11-14 23:39:00 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (198.1ms)
+  Rendered shared/_navbarmenu.html.erb (2.1ms)
+  Rendered shared/_flashmsg.html.erb (1.0ms)
+Completed 200 OK in 260ms (Views: 251.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 172.21.0.1 at 2020-11-14 23:39:09 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/assets/logo-691229d942f186d3157b195c94a851c491506a12724b24d4b65f429574addd97.png"):
+  
+actionpack (5.2.4.3) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:22:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `block in call'
+activesupport (5.2.4.3) lib/active_support/logger_silence.rb:21:in `silence'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.3) lib/rails/engine.rb:524:in `call'
+thin (1.7.2) lib/thin/connection.rb:86:in `block in pre_process'
+thin (1.7.2) lib/thin/connection.rb:84:in `catch'
+thin (1.7.2) lib/thin/connection.rb:84:in `pre_process'
+thin (1.7.2) lib/thin/connection.rb:53:in `process'
+thin (1.7.2) lib/thin/connection.rb:39:in `receive_data'
+eventmachine (1.2.7) lib/eventmachine.rb:195:in `run_machine'
+eventmachine (1.2.7) lib/eventmachine.rb:195:in `run'
+thin (1.7.2) lib/thin/backends/base.rb:73:in `start'
+thin (1.7.2) lib/thin/server.rb:162:in `start'
+thin (1.7.2) lib/thin/controllers/controller.rb:87:in `start'
+thin (1.7.2) lib/thin/runner.rb:203:in `run_command'
+thin (1.7.2) lib/thin/runner.rb:159:in `run!'
+thin (1.7.2) bin/thin:6:in `<top (required)>'
+/usr/local/bundle/bin/thin:23:in `load'
+/usr/local/bundle/bin/thin:23:in `<main>'
+Started GET "/users/auth/doorkeeper" for 172.21.0.1 at 2020-11-14 23:39:10 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/" for 172.21.0.1 at 2020-11-14 23:39:13 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (3.0ms)
+  Rendered shared/_navbarmenu.html.erb (0.9ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 29ms (Views: 27.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.21.0.1 at 2020-11-15 09:37:22 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (225.5ms)
+  Rendered shared/_navbarmenu.html.erb (1.2ms)
+  Rendered shared/_flashmsg.html.erb (0.5ms)
+Completed 200 OK in 338ms (Views: 324.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 172.21.0.1 at 2020-11-15 09:39:59 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (4.5ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 29ms (Views: 27.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 172.21.0.1 at 2020-11-15 09:40:00 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/assets/logo-691229d942f186d3157b195c94a851c491506a12724b24d4b65f429574addd97.png"):
+  
+actionpack (5.2.4.3) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:22:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `block in call'
+activesupport (5.2.4.3) lib/active_support/logger_silence.rb:21:in `silence'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.3) lib/rails/engine.rb:524:in `call'
+thin (1.7.2) lib/thin/connection.rb:86:in `block in pre_process'
+thin (1.7.2) lib/thin/connection.rb:84:in `catch'
+thin (1.7.2) lib/thin/connection.rb:84:in `pre_process'
+thin (1.7.2) lib/thin/connection.rb:53:in `process'
+thin (1.7.2) lib/thin/connection.rb:39:in `receive_data'
+eventmachine (1.2.7) lib/eventmachine.rb:195:in `run_machine'
+eventmachine (1.2.7) lib/eventmachine.rb:195:in `run'
+thin (1.7.2) lib/thin/backends/base.rb:73:in `start'
+thin (1.7.2) lib/thin/server.rb:162:in `start'
+thin (1.7.2) lib/thin/controllers/controller.rb:87:in `start'
+thin (1.7.2) lib/thin/runner.rb:203:in `run_command'
+thin (1.7.2) lib/thin/runner.rb:159:in `run!'
+thin (1.7.2) bin/thin:6:in `<top (required)>'
+/usr/local/bundle/bin/thin:23:in `load'
+/usr/local/bundle/bin/thin:23:in `<main>'
+Started GET "/users/auth/doorkeeper" for 172.21.0.1 at 2020-11-15 09:40:02 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/" for 192.168.2.10 at 2020-11-15 10:38:11 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (229.6ms)
+  Rendered shared/_navbarmenu.html.erb (1.2ms)
+  Rendered shared/_flashmsg.html.erb (0.7ms)
+Completed 200 OK in 285ms (Views: 276.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 192.168.2.10 at 2020-11-15 10:38:14 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper" for 192.168.2.10 at 2020-11-15 10:38:14 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper/callback?code=6T-rlaFPbk4Sw7XU27LOSkOy6K9LfpK5MPZGpRW42O4&state=9c63d1410e9d963a5ca41f59f01e44955bbe706f3c892f54" for 192.168.2.10 at 2020-11-15 10:38:15 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Users::OmniauthCallbacksController#doorkeeper as HTML
+  Parameters: {"code"=>"6T-rlaFPbk4Sw7XU27LOSkOy6K9LfpK5MPZGpRW42O4", "state"=>"9c63d1410e9d963a5ca41f59f01e44955bbe706f3c892f54"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."provider" = ? AND "users"."uid" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["provider", "doorkeeper"], ["uid", "1"], ["LIMIT", 1]]
+  ↳ app/models/user.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/user.rb:13
+  [1m[36mUser Exists (1.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "sourabh.mane@example.com"], ["LIMIT", 1]]
+  ↳ app/models/user.rb:13
+  [1m[36mUser Create (1.4ms)[0m  [1m[32mINSERT INTO "users" ("firstname", "lastname", "email", "encrypted_password", "created_at", "updated_at", "provider", "uid") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["firstname", "Sourabh"], ["lastname", "Mane"], ["email", "sourabh.mane@example.com"], ["encrypted_password", "$2a$12$OJ8y0gEkERCyv8GXepDGLu5YFH2zUhyyD2ms6KrDAy5H4J46kkwqa"], ["created_at", "2020-11-15 10:38:16.509611"], ["updated_at", "2020-11-15 10:38:16.509611"], ["provider", "doorkeeper"], ["uid", "1"]]
+  ↳ app/models/user.rb:13
+  [1m[35m (8.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/models/user.rb:13
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/user.rb:22
+  [1m[36mUser Update (0.6ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = ?, "doorkeeper_access_token" = ? WHERE "users"."id" = ?[0m  [["updated_at", "2020-11-15 10:38:16.525513"], ["doorkeeper_access_token", "edL0tmb4Huld8MgLSVNIBAFY9iLc3FrO5yQEqCloyZ0"], ["id", 1]]
+  ↳ app/models/user.rb:22
+  [1m[35m (4.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/models/user.rb:22
+Redirected to https://192.168.2.10:3001/
+Completed 302 Found in 396ms (ActiveRecord: 18.4ms)
+
+
+Started GET "/" for 192.168.2.10 at 2020-11-15 10:38:16 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/index_controller.rb:6
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (1.8ms)
+  Rendered shared/_navbarmenu.html.erb (0.9ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 24ms (Views: 20.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/contracts" for 192.168.2.10 at 2020-11-15 10:38:23 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ContractsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:29
+  Rendering contracts/index.html.erb within layouts/application
+  Rendered contracts/index.html.erb within layouts/application (0.4ms)
+  Rendered shared/_navbarmenu.html.erb (2.5ms)
+  Rendered shared/_flashmsg.html.erb (1.3ms)
+Completed 200 OK in 476ms (Views: 44.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 192.168.2.10 at 2020-11-15 10:38:26 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/index_controller.rb:6
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (4.0ms)
+  Rendered shared/_navbarmenu.html.erb (1.2ms)
+  Rendered shared/_flashmsg.html.erb (0.7ms)
+Completed 200 OK in 53ms (Views: 46.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 192.168.2.10 at 2020-11-15 10:38:26 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/index_controller.rb:6
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (6.0ms)
+  Rendered shared/_navbarmenu.html.erb (1.7ms)
+  Rendered shared/_flashmsg.html.erb (0.5ms)
+Completed 200 OK in 49ms (Views: 44.3ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/users/sign_out" for 192.168.2.10 at 2020-11-15 10:40:08 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Users::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"vjxRF0KDCxCGPZLK+wilRjHL54PfIuMOt3DdiyoccdcMnVn0oPZGAISef9RxalGWKM2Tv0jJUNCdYFbXQbeVyQ=="}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ /usr/local/bundle/bin/thin:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ /usr/local/bundle/bin/thin:23
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Redirected to https://192.168.2.10:3001/
+Completed 302 Found in 7ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 192.168.2.10 at 2020-11-15 10:40:08 +0000
+Cannot render console from 192.168.2.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.3ms)
+  Rendered shared/_navbarmenu.html.erb (1.3ms)
+  Rendered shared/_flashmsg.html.erb (0.5ms)
+Completed 200 OK in 28ms (Views: 25.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:32:16 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (227.4ms)
+  Rendered shared/_navbarmenu.html.erb (1.4ms)
+  Rendered shared/_flashmsg.html.erb (0.7ms)
+Completed 200 OK in 321ms (Views: 306.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:32:19 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.3ms)
+  Rendered shared/_navbarmenu.html.erb (0.9ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 22ms (Views: 19.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:32:20 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:32:20 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:32:59 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:33:01 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.3ms)
+  Rendered shared/_navbarmenu.html.erb (1.1ms)
+  Rendered shared/_flashmsg.html.erb (1.1ms)
+Completed 200 OK in 72ms (Views: 71.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:33:21 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.9ms)
+  Rendered shared/_navbarmenu.html.erb (0.9ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 23ms (Views: 21.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:33:30 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:33:30 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:34:38 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (1.7ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.8ms)
+Completed 200 OK in 24ms (Views: 22.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:34:40 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (3.3ms)
+  Rendered shared/_navbarmenu.html.erb (1.2ms)
+  Rendered shared/_flashmsg.html.erb (0.7ms)
+Completed 200 OK in 51ms (Views: 48.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:34:41 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (2.9ms)
+  Rendered shared/_navbarmenu.html.erb (1.5ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 40ms (Views: 38.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:34:42 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:34:42 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:35:12 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (167.3ms)
+  Rendered shared/_navbarmenu.html.erb (1.0ms)
+  Rendered shared/_flashmsg.html.erb (0.5ms)
+Completed 200 OK in 207ms (Views: 196.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:35:14 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper" for 10.182.176.107 at 2020-11-19 15:35:14 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Started GET "/users/auth/doorkeeper/callback?code=rFfK3juztWu-9oCnz9c3Grx1WoyGsbU764vPwtb0wzo&state=06e718867eb3e94a03457cb43eb9870162b6af0f97089722" for 10.182.176.107 at 2020-11-19 15:35:14 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Users::OmniauthCallbacksController#doorkeeper as HTML
+  Parameters: {"code"=>"rFfK3juztWu-9oCnz9c3Grx1WoyGsbU764vPwtb0wzo", "state"=>"06e718867eb3e94a03457cb43eb9870162b6af0f97089722"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."provider" = ? AND "users"."uid" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["provider", "doorkeeper"], ["uid", "1"], ["LIMIT", 1]]
+  ↳ app/models/user.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/user.rb:22
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE "users" SET "doorkeeper_access_token" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["doorkeeper_access_token", "I20MOTM1MYDKpJi5hnJdtW1xM8ktdgEIRLKeDUQqJZU"], ["updated_at", "2020-11-19 15:35:14.505810"], ["id", 1]]
+  ↳ app/models/user.rb:22
+  [1m[35m (6.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/models/user.rb:22
+Redirected to https://10.182.176.107:3001/
+Completed 302 Found in 76ms (ActiveRecord: 8.9ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:35:14 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/index_controller.rb:6
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (1.9ms)
+  Rendered shared/_navbarmenu.html.erb (0.9ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 22ms (Views: 19.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/contracts" for 10.182.176.107 at 2020-11-19 15:35:16 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ContractsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:29
+  Rendering contracts/index.html.erb within layouts/application
+  Rendered contracts/index.html.erb within layouts/application (0.5ms)
+  Rendered shared/_navbarmenu.html.erb (1.2ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 63ms (Views: 20.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/active_sensors" for 10.182.176.107 at 2020-11-19 15:35:17 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ActiveSensorsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:29
+  Rendering active_sensors/index.html.erb within layouts/application
+  Rendered active_sensors/index.html.erb within layouts/application (0.5ms)
+  Rendered shared/_navbarmenu.html.erb (1.3ms)
+  Rendered shared/_flashmsg.html.erb (0.7ms)
+Completed 200 OK in 63ms (Views: 34.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/sensor_values" for 10.182.176.107 at 2020-11-19 15:35:17 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SensorValuesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:29
+  Rendering sensor_values/index.html.erb within layouts/application
+  Rendered sensor_values/index.html.erb within layouts/application (4.1ms)
+  Rendered shared/_navbarmenu.html.erb (1.4ms)
+  Rendered shared/_flashmsg.html.erb (1.0ms)
+Completed 200 OK in 55ms (Views: 38.4ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/users/sign_out" for 10.182.176.107 at 2020-11-19 15:35:19 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Users::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"x00UPXBq9O/azK/YdpX2IpR5HvIQ4kr7QoUI9THVN+5+2jXSUJsNYvuclyuMHVPOoTlyQJdofKMYSh3h2qsyxg=="}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ /usr/local/bundle/bin/thin:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ /usr/local/bundle/bin/thin:23
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ /usr/local/bundle/bin/thin:23
+Redirected to https://10.182.176.107:3001/
+Completed 302 Found in 9ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 10.182.176.107 at 2020-11-19 15:35:19 +0000
+Cannot render console from 10.182.176.107! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by IndexController#home as HTML
+  Rendering index/home.html.erb within layouts/application
+  Rendered index/home.html.erb within layouts/application (4.8ms)
+  Rendered shared/_navbarmenu.html.erb (1.2ms)
+  Rendered shared/_flashmsg.html.erb (0.4ms)
+Completed 200 OK in 64ms (Views: 62.0ms | ActiveRecord: 0.0ms)
+
+

@@ -1,0 +1,22 @@
+{% extends "leaf/base.html" %}
+{% block content %}
+{% load static %}
+
+
+	<div class="sidebar navbar-dark indigo">
+		<a href="{% url 'nfmvorarbeiter-leaf' %}">Neue Fehlermeldung</a>
+		<a href="{% url 'daten-bank' %}">Datenbank</a>	  
+	</div>
+
+
+	<div class="content">
+	  <h2>Neue Fehlermeldung</h2>
+	  <div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+		  </div> <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+	  </div>
+	</div>
+
+{% endblock content %}
+

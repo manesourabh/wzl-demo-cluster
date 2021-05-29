@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: dbleaf!2020
+
+  ioppcc:
+    image: rails-demo-iconpro
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./iop-base-for-leaf:/appcode
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      RDS_USERNAME: dbuser
+      RDS_PASSWORD: dbleaf!2020
+      RDS_HOSTNAME: db
+      RDS_PORT: 5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  leaf:
+    image: django-demo-iconpro
+    volumes:
+      - ./leaf-application:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - ioppcc
+
+  humapp:
+    image: humapp-demo-iconpro
+    command: bash -c "rm -f tmp/pids/server.pid && thin start --ssl --ssl-key-file localhost.key --ssl-cert-file localhost.crt -p 3001 -a 0.0.0.0"
+    volumes:
+      - ./humapp:/appcode
+    ports:
+      - 3001:3001
+    depends_on:
+      - ioppcc
+    environment:
+      RAILS_ENV: development
+      DOORKEEPER_APP_ID: 4LTrB5QLckkGAnXJ41rsnPcJZlUsnL7e8gk6W7A7DeQ
+      DOORKEEPER_APP_SECRET: fNhK4d98XfT2YjI5oxmSMUeioZaIXOLRgIHwhgNtKKM # Secret
+      DOORKEEPER_APP_URL: http://10.182.176.107:3000/
+
+volumes:
+  db_data:

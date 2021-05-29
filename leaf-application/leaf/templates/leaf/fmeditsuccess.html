@@ -1,0 +1,17 @@
+{% extends "leaf/base.html" %}
+{% block content %}
+{% load static %}
+
+
+    <div class="sidebar navbar-dark indigo">
+		<a href="{% url 'nfmadmin-leaf' %}">Neue Fehlermeldung</a>
+		<a href="{% url 'daten-bank' %}">Datenbank</a>	  
+	</div>
+
+	<div class="content">
+		<h2><center>Die Fehlermeldung wurde erfolgreich editiert.</center></h2> 
+	</div>
+		
+
+{% endblock content %}
+

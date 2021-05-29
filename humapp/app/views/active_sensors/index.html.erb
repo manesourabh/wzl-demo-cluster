@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-md-11">
+    <div class="card mt-2">
+      <header class="card-header">
+        <h4 class="card-title mt-2"> Active Sensors
+        <div class="float-right">
+          <a href="/active_sensors/new" class="btn btn-success " role="button" aria-pressed="true">New Sensor</a>
+          <a href="/" class="btn btn-primary " role="button" aria-pressed="true">Back</a>
+        </div>
+        </h4>
+      </header>
+      <div class="card-body">
+        <table class="table display nowrap" id="table1" width="100%" >
+
+        </table>
+      </div><!-- card-body.// -->
+    </div> <!-- card.// -->
+  </div> <!-- col.//-->
+</div> <!-- row.//-->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#table1').DataTable( {
+          data: <%= raw @data %>,
+          columns: [
+              { data: "id", title: "Id" },
+              { data: "sensor_name", title: "Name" },
+              { data: "contract_id", title: "Contract ID" },
+              { data: "contract_id", title: "Status" ,render : function ( data, type, row, meta ){
+                if (type === 'display'){
+                  // console.log(data)
+                  if (data){
+                      data = '<h5 class="my-0"><span class="badge badge-success">Active</span></h5>';
+                    } else {
+                      data = '<h5 class="my-0"><span class="badge badge-secondary">Inactive</span></h5>';
+                    }
+                  }
+                return data;
+              }, className: "text-center"},
+              { data: "contract_id", title: "Action" ,render : function ( data, type, row, meta ){
+                if (type === 'display'){
+                  // console.log(data)
+                  if (data){
+                      data = '<button data-sensor="'+ encodeURIComponent(row.sensor_name)+'" class="btn btn-sm btn-danger py-0 RemoveSensor" aria-pressed="true">Remove</button>';
+                    } else {
+                      data = null;
+                    }
+                  }
+                return data;
+              }, className: "text-center"},
+              { data: "id", title: "Edit Sensor" ,render : function ( data, type, row, meta ){
+                if (type === 'display'){
+                  // console.log(data)
+                  if (data){
+                      data = '<a href="/active_sensors/'+ encodeURIComponent(row.id)+'/edit" class="btn btn-sm btn-warning py-0 EditSensor">Edit</a>';
+                    } else {
+                      data = null;
+                    }
+                  }
+                return data;
+              }, className: "text-center"}
+          ],
+          "scrollX": true
+
+      } );
+      $(".RemoveSensor").click(function(){
+        $.post( "/contracts/remove_sensor", { sensor_name: $(this).data("sensor")}, function() {
+          // location.reload(true);
+        });
+      });
+      $(".EditSensor").click(function(){
+        $.get( "/active_sensors/"+ $(this).data("sensorid") +"/edit", function() {
+          // location.reload(true);
+          console.log("hello")
+        });
+      });
+  } );
+</script>

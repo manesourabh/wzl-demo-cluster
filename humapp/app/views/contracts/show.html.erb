@@ -1,0 +1,250 @@
+<div class="row justify-content-md-center mt-2">
+  <div class="col col-md-11">
+    <div class="card">
+      <div class="card-header d-inline-flex justify-content-between">
+          <div class="">
+            <!-- # dummy div -->
+          </div>
+          <div class="">
+            <h3 class="mb-0 text-center">Contract <%= @contract["contract_id"] %></h3>
+          </div>
+          <div class="">
+            <a href="/contracts/" class="btn btn-primary" role="button" aria-pressed="true">All Contract</a>
+          </div>
+      </div>
+    </div>
+    <div class="row px-3">
+      <div class="col-md-6 rounded border">
+        <div class="py-3 rounded">
+          <table class="table">
+            <thead>
+              <tr class="table-info">
+                <th class="text-center rounded border" colspan="2">Contract information
+                  <button onclick=location.href='/contracts/<%=@contract["id"]%>/edit'; type="button" class="btn btn-success btn-sm py-0 float-right">Edit</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Contract ID</th>
+                <td><%= @contract["contract_id"] %></td>
+              </tr>
+              <tr>
+                <th scope="row">Contract Name</th>
+                <td><%= @contract["name"] %></td>
+              </tr>
+              <tr>
+                <th scope="row">Target Value</th>
+                <td><%= @contract["fvalue"] %></td>
+              </tr>
+              <tr>
+                <th scope="row">Alarm</th>
+                <td><%=  if @contract["Alarm"] then "Yes" else "No" end %></td>
+              </tr>
+              <tr>
+                <th scope="row">Email</th>
+                <td><%= @contract["email"] %></td>
+              </tr>
+              <tr>
+                <th scope="row">Duration</th>
+                <td><%= @contract_duration %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6 rounded border">
+        <div class="py-3 rounded">
+          <table class="table">
+            <thead>
+              <tr class="table-info">
+                <th class="text-center rounded border" colspan="2">Assigned sensor
+                  <button type="button" class="btn btn-success btn-sm py-0 float-right" data-toggle="modal" data-target="#addNewSensorModal">Add</button>
+                  <button type="button" class="btn btn-danger btn-sm py-0 float-left removeAllSensors">Remove all</button>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <table class="table display nowrap" id="table1" width="100%" >
+
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        Sensor values
+      </div>
+      <div class="card-body">
+        <div class="card-body p-0">
+          <div class="row">
+            <% @assigned_sensor.each do |s|%>
+              <div class="col-md-6">
+                <div class="card card-body mb-3" id="container<%=s["id"]%>" style="height: 300px" >
+
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+      </div>
+    </div><!-- card-body.// -->
+  </div>
+</div>
+
+<!-- Modal for assigning new sensor -->
+<div class="modal fade" id="addNewSensorModal" tabindex="-1" role="dialog" aria-labelledby="addNewSensorModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewSensorModalTitle">Add Sensor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with( url: "/contracts/assign_sensor", html: { method: :post, id: "add_sensor" }) do |f| %>
+          <div class="form-group row">
+            <!-- <label for="contract_id" class="col-sm-4 col-form-label">Contract ID</label> -->
+            <div class="col-sm-8">
+              <%= f.text_field :id, type: "hidden", value: @contract["id"], class: "form-control" %>
+              <%= f.text_field :contract_id, type: "hidden", value: @contract["contract_id"], class: "form-control" %>
+            </div>
+          </div>
+          <% if @inactive_sensors["data"].any? %>
+            <div class="form-group row">
+              <label for="contract_name" class="col-sm-4 col-form-label">Sensor</label>
+              <div class="col-sm-8">
+                <%= select_tag("sensor_name", options_for_select(@inactive_sensors["data"]), class:"form-control")%>
+              </div>
+            </div>
+          <% else %>
+            <div class="form-group row">
+              <label for="contract_name" class="col-sm-10 mx-auto col-form-label">All sensors are already assigned</label>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <% if @inactive_sensors["data"].any? %>
+          <input type="submit" name="commit" value="Add Sensor" class="btn btn-primary" data-disable-with="Please wait..." form="add_sensor">
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#table1').DataTable( {
+          data: <%= raw @assigned_sensor.to_json %>,
+          columns: [
+              { data: "id", title: "Id" },
+              { data: "sensor_name", title: "Name" },
+              { data: "start_time", title: "Start" },
+              { data: "end_time", title: "Remove" ,render : function ( data, type, row, meta ){
+                if (type === 'display'){
+                  // console.log(data)
+                  if (!data){
+                      data = '<button data-sensor="'+ encodeURIComponent(row.sensor_name)+'" data-id=<%=@contract["id"]%> class="btn btn-sm btn-danger py-0 RemoveSensor" aria-pressed="true">Remove</button>';
+                    }
+                  }
+                return data;
+              }}
+          ],
+          "scrollX": true
+
+      } );
+      $(".RemoveSensor").click(function(){
+        $.post( "/contracts/remove_sensor", { sensor_name: $(this).data("sensor"), id: $(this).data("id") }, function() {
+          // location.reload(true);
+        });
+      });
+
+      $(".removeAllSensors").click(function(){
+        $('.RemoveSensor').each(function(i, obj) {
+              $.post( "/contracts/remove_sensor", { sensor_name: $(this).data("sensor"), id: $(this).data("id") }, function() {
+          });
+        });
+      });
+
+      var hich_options =  {
+          chart: {
+              type: 'line'
+          },
+          title: {
+              text: 'Live Data (Rows JSON)'
+          },
+
+          xAxis: {
+              type: 'datetime'
+          },
+          yAxis:{
+              <% if @contract["fvalue"] %>
+              plotLines: [{
+                color: 'red', // Color value
+                dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+                value: <%= @contract["fvalue"] %>, // Value of where the line will appear
+                width: 2 // Width of the line
+              }]
+              <% end %>
+          },
+          series: [{
+              name: 'Dryness',
+              data: []
+          }]
+      };
+      const timezone = new Date().getTimezoneOffset()
+
+      Highcharts.setOptions({
+          global: {
+              timezoneOffset: timezone
+          }
+      });
+      <% @assigned_sensor.each do |s|%>
+        hich_options.title.text = "Sensor <%= s["sensor_name"]%>"
+
+        var chart<%=s["id"]%> = Highcharts.chart('container<%=s["id"]%>', hich_options);
+        // chart<%=s["id"]%>.title.setText("<%= s["sensor_name"]%>",true)
+        var i;
+        var callTime<%=s["id"]%> = new Date().toISOString()
+        var params = "sensor_name=<%= s['sensor_name']%>&last=20&from=<%= s['start_time']%>";
+        if (<%= s['end_time'].blank? ? false:true%>){
+          params = params + "&to=<%= s['end_time']%>";
+        }
+        $.getJSON("/sensors/latest_value_batch?"+params, function(data, status){
+          console.log(data["data"])
+          chart<%=s["id"]%>.series[0].setData(data["data"],true)
+        });
+      <% end %>
+      var keepLoop=true
+      window.setInterval(function(){
+        <% @assigned_sensor.each do |s|%>
+        if (stopLoop){
+          <% if s['end_time'].blank? %>
+            $.getJSON("/sensors/latest_value_batch?sensor_name=<%= s['sensor_name']%>&last=20&from="+ callTime<%=s["id"]%>, function(data, status){
+              // console.log(data["data"])
+              for(pt of data["data"]){
+                chart<%=s["id"]%>.series[0].addPoint(pt, true, true);
+              }
+            });
+            callTime<%=s["id"]%> = new Date().toISOString()
+            // console.log(callTime<%=s["id"]%>)
+          <% end %>
+        }
+        <% end %>
+            console.log("its working")
+      }, 60000);
+  });
+  $(window).bind('beforeunload', function(){
+    return 'Are you sure you want to leave?';
+  })
+</script>

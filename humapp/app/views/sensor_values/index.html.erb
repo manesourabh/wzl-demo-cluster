@@ -1,0 +1,95 @@
+<% content_for(:body_attributes) do %>
+  data-turbolinks="false"
+<% end %>
+<div class="row justify-content-center">
+  <div class="col-md-11">
+    <div class="card mt-2">
+      <header class="card-header">
+        <h4 class="card-title mt-2"> Active Sensors Readings
+        <div class="float-right">
+          <%= select_tag("sensor_name", options_for_select([ "20", "50", "100", "200"], @points), class:"small selectDataPoints")%>
+          <!-- <a href="/active_sensors/new" class="btn btn-success " role="button" aria-pressed="true">New Sensor</a>
+          <a href="/" class="btn btn-primary " role="button" aria-pressed="true">Back</a> -->
+        </div>
+        </h4>
+
+      </header>
+      <div class="card-body">
+        <div class="row">
+          <%   @sensors.each do |s|%>
+            <div class="col-md-6">
+              <div class="card card-body mb-3" id="container<%=s["id"]%>" style="height: 300px" >
+
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div><!-- card-body.// -->
+    </div> <!-- card.// -->
+  </div> <!-- col.//-->
+</div> <!-- row.//-->
+
+<!-- <div class="border" id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
+<script>
+    console.log("Its is working")
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        var hich_options =  {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Live Data (Rows JSON)'
+            },
+            yAxis: {
+                title: {
+                    text: 'Dryness'
+                 }
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            series: [{
+                data: []
+            }]
+        };
+
+        // Seting correct timeszone
+        const timezone = new Date().getTimezoneOffset()
+
+        Highcharts.setOptions({
+            global: {
+                timezoneOffset: timezone
+            }
+        });
+
+        <% @sensors.each do |s|%>
+          hich_options.title.text = "Sensor <%= s["sensor_name"] + " (" + if s["contract_id"] then s["contract_id"] else "Not assigned" end + ")" %>"
+          var chart<%=s["id"]%> = Highcharts.chart('container<%=s["id"]%>', hich_options);
+          // chart<%=s["id"]%>.title.setText("<%= s["sensor_name"] %> ",true)
+          var i;
+          var callTime<%=s["id"]%> = new Date().toISOString()
+          $.getJSON("/sensors/latest_value_batch?sensor_name=<%= s['sensor_name']%>&last=<%= @points %>", function(data, status){
+            console.log(data["data"])
+            chart<%=s["id"]%>.series[0].setData(data["data"],true)
+          });
+        <% end %>
+
+        $(".selectDataPoints").change(function (){
+            window.location.search = '?points=' + $(this).val()
+        });
+        window.setInterval(function(){
+          <% @sensors.each do |s|%>
+          $.getJSON("/sensors/latest_value_batch?sensor_name=<%= s['sensor_name']%>&last=20&from="+ callTime<%=s["id"]%>, function(data, status){
+            // console.log(data["data"])
+            for(pt of data["data"]){
+              chart<%=s["id"]%>.series[0].addPoint(pt, true, true);
+            }
+          });
+          callTime<%=s["id"]%> = new Date().toISOString()
+          // console.log(callTime<%=s["id"]%>)
+          <% end %>
+          console.log("its working")
+        }, 900000);
+    });
+</script>

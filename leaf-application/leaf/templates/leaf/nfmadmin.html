@@ -1,0 +1,200 @@
+{% extends "leaf/base.html" %}
+{% block content %}
+{% load static %}
+
+
+	<div class="sidebar navbar-dark indigo">
+		<a href="{% url 'nfmadmin-leaf' %}">Neue Fehlermeldung</a>
+		<a href="{% url 'daten-bank' %}">Datenbank</a>	  
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		    $('.loesbar_als_bool').click(function() {
+		        $('.loesbar_als_bool').not(this).prop('checked', false);
+		    });
+		});
+	</script>
+	<div class="content">
+		<h2>Neue Fehlermeldung</h2> <br><br>
+		<form lang="de" action="{% url 'nfmpreprocessing-leaf' %}" method="post">
+		  <div class="form-row">
+			<div class="col-md-6 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+					  <span class="input-group-text" id="inputGroupPrepend1">Mitarbeiter</span>
+					</div>
+					<input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend1" readonly>
+				</div>
+		    </div>
+		    <div class="col-md-2 mb-3">
+				<div class="input-group">
+			        <div class="input-group-prepend">
+			          <span class="input-group-text" id="inputGroupPrepend2">Datum</span>
+			        </div>
+			        <input type="text" class="form-control" name="error_datetime" id="datepicker1" aria-describedby="inputGroupPrepend2" readonly>
+		      	</div>
+		    </div>
+		    <div class="col-md-2 mb-3">
+				<div class="input-group">
+		       		<div class='input-group date' id='datetimepicker3'>
+	                    <input type='text' class="form-control" name="nfdate3" required/>
+	                    <span class="input-group-addon">
+	                        <span class="fa fa-clock-o"></span>
+	                    </span>
+	                </div>
+		      	</div>
+		    </div>
+		    <div class="col-md-2 mb-3">
+				<div class="input-group">
+				    <div class="input-group-prepend">
+		          		<span class="input-group-text" id="inputGroupPrepend3">Status</span>
+		        	</div>
+				    <select id="inputStatus" name="status" class="form-control" readonly>
+				        <option selected>Offen</option>
+			      	</select>
+		      	</div>
+		    </div>
+		  </div>
+
+		  <div class="form-row">
+				<div class="col-md-6 mb-3">
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+								  <span class="input-group-text" id="inputGroupPrepend1">Tätigkeit</span>
+								</div>
+								<select id="first-choice" name="activity" class="form-control" oninvalid="setCustomValidity('Dieses Feld wird benötigt.')" oninput="setCustomValidity('')" required>
+							        <option selected value="base">Bitte auswählen</option>
+							        <option value="Arbeitsvorbereitung">Arbeitsvorbereitung</option>
+							        <option value="Ausschneiden">Ausschneiden</option>
+							        <option value="Drehen">Drehen</option>
+							        <option value="FaltenNaehen">Falten Naehen</option>
+							        <option value="Heften">Heften</option>
+							        <option value="KerneHeften">Kerne Heften</option>
+							        <option value="NeuerFehler">Neuer Fehler</option>
+							        <option value="Pressen">Pressen</option>
+							        <option value="RollenSchneiden">Rollen Schneiden</option>
+							        <option value="SchlauchNaehen">Schlauch Naehen</option>
+							        <option value="SchlauchSchneiden">Schlauch Schneiden</option>
+							        <option value="Uebernaehen">Uebernaehen</option>
+						      	</select>
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+								  <span class="input-group-text" id="inputGroupPrepend1">Fehler</span>
+								</div>
+								<select id="second-choice" name="failure" class="form-control">
+							        <option>Bitte wählen Sie oben</option>
+						      	</select>
+						      	<div class="input-group-append">
+									<button class="btn-primary btn-sm" type="button" data-toggle="modal" data-target="#addnewfehler">Hinzufügen</button>
+								</div>
+							</div>
+					    </div>
+						<div class="col-md-12 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+								  <span class="input-group-text" id="inputGroupPrepend1">Grund</span>
+								</div>
+								<select id="third-choice" name="cause" class="form-control">
+							        <option>Bitte wählen Sie oben</option>
+						      	</select>
+						      	<div class="input-group-append">
+									<button class="btn-primary btn-sm" type="button" data-toggle="modal" data-target="#addnewgrund">Hinzufügen</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			    </div>
+			    <div class="col-md-6 mb-3">
+					<div class="input-group">
+					    <div class="input-group-prepend">
+			          		<span class="input-group-text" name="description" id="inputGroupPrepend3">Fehlerbeschreibung</span>
+			        	</div>
+					    <textarea rows="6" class="form-control" name="description" id="validationDefaultDesc" aria-describedby="inputGroupPrepend4"></textarea>
+			      	</div>
+			    </div>
+		  </div>
+		  <div class="form-row">
+		  	<div class="col-md-6 mb-3"></div>
+			<div class="col-md-3">
+				<div class="input-group">
+					<div class="custom-control custom-radio col-12" style="border:1px solid #CDCCCE; padding: 10px 0px 10px 35px; border-radius: 4%;">
+						<input type="checkbox" id="customRadio1" name="customRadio" class="loesbar_als_bool">
+						<label class="loesbar_als_bool" for="customRadio1">Fehler sofort lösbar</label>
+					</div>
+			  	</div>
+		    </div> 
+			<div class="col-md-3">
+				<div class="input-group">
+					<div class="custom-control custom-radio col-12" style="border:1px solid #CDCCCE; padding: 10px 0px 10px 35px; border-radius: 4%;">
+						<input type="checkbox" id="customRadio2" name="customRadio2" class="loesbar_als_bool">
+						<label class="loesbar_als_bool" for="customRadio2">Fehler nicht lösbar</label>
+					</div>
+				</div>
+			</div>
+		  </div><br>
+		  <div class="form-row">
+		  	<div class="col-3">
+		  		<a href="{% url 'admin-leaf' %}" style="color: inherit;">
+		  			<button type="button" class="btn float-left" style="background-color: orange;">Zurück</button>
+		  		</a>
+		  	</div>
+		  	<div class="col-3 offset-3 my-auto">
+			    <div class="input-group">
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input" name="nfbild" id="customFile">
+				    <label class="custom-file-label" for="customFile">Bild hochladen</label>
+				  </div>
+	            </div>
+	        </div>
+	        <div class="col-3">
+		    	<button class="btn float-right" style="background-color: orange;" type="submit" onclick="validation()">Fehleraufnahme beenden</button>
+		    </div>
+		</form>
+	</div>
+
+	<div class="modal fade" id="addnewfehler" tabindex="-1" role="dialog" aria-labelledby="addnewfehler" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalCenterTitle">Fehler Hinzufügen</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <input class="form-control" id="addfehler" type="text" placeholder="Einen Vorschlag hinzufügen">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" onclick="savenewfehler()" data-dismiss="modal">Speichern</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="addnewgrund" tabindex="-1" role="dialog" aria-labelledby="addnewgrund" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalCenterTitle">Grund Hinzufügen</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<input class="form-control" id="addgrund" type="text" placeholder="Einen Vorschlag hinzufügen">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" onclick="savenewgrund()" data-dismiss="modal">Speichern</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+{% endblock content %}
+

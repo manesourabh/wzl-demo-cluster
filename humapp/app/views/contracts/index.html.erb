@@ -1,0 +1,74 @@
+<div class="row justify-content-md-center mt-2">
+  <div class="col col-md-11">
+    <div class="card">
+      <div class="card-header d-inline-flex justify-content-between">
+          <div class="">
+            <!-- <a href="/contracts/" class="btn btn-primary" role="button" aria-pressed="true">All Contracts</a> -->
+          </div>
+          <div class="">
+            <h3 class="mb-0 text-center">Contracts</h3>
+          </div>
+          <div class="">
+            <a href="/contracts/new" class="btn btn-success" role="button" aria-pressed="true">New Contract</a>
+          </div>
+      </div>
+      <div class="card-body">
+        <div class="card card-body p-0 border-light">
+          <table class="table display nowrap" id="table1" width="100%" >
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#table1').DataTable( {
+          data: <%= raw @data %>,
+          columns: [
+              { data: "id", title: "Id" },
+              { data: "contract_id", title: "Contract ID" },
+              { data: "id", title: "Show" ,render : function ( data, type, row, meta ){
+                if (type === 'display'){
+                    data = '<a href="/contracts/'+ encodeURIComponent(data)+'" class="btn btn-sm btn-info py-0" role="button" aria-pressed="true">Show</a>';
+                  }
+                return data;
+              }},
+              { data: "name", title: "Name of Contract" },
+              { data: "fvalue", title: "Final value" },
+              { data: "alarm", title: "Alarm" },
+              { data: "end_date", title: "Duration", render : function (data, type, row, meta){
+                if (type === 'display'){
+                  if (data){
+                    var ed = new Date(data)
+                  } else {
+                    var ed = Date.now()
+                  }
+                  var sd = new Date(row.created_at);
+                  var delta = Math.abs(ed - sd) / 1000;
+                  // calculate (and subtract) whole days
+                  var days = Math.floor(delta / 86400);
+                  delta -= days * 86400;
+                  // calculate (and subtract) whole hours
+                  var hours = Math.floor(delta / 3600) % 24;
+                  data = String(days) + " days, " + String(hours) + " hours"
+                }
+                return data
+              }},
+              { data: "created_at", title: "Created at", render : function (data, type, row, meta){
+                if (type === 'display'){
+                  var d = new Date(data)
+                  data = d.toJSON().slice(0,10).split('-').reverse().join('-')
+                }
+                return data
+              }},
+          ],
+          "scrollX": true,
+          "order": [[ 0, "desc" ]]
+
+      } );
+  } );
+</script>
